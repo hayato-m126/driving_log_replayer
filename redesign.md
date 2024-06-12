@@ -24,6 +24,7 @@ lanelet2_extension_pythonとか
 - 今のディレクトリ固定の構成をやめたい。webautoのディレクトリにあるt4_datasetをシナリオから指定してdlr simulation runとかもやりたい
 - cliをなくす。わかりにくい。シナリオをパースして必要なargを作ってるし、やっぱりシナリオファイルを引数に指定しているこれは無駄では。webauto側もlaunch引数が変わることで、I/Fが変わってしまう。それを吸収するためにwasimやdlr_cliがいるのはなんか違う。
 - ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} これだけで終わらせたい
+- foxgloveを前提にしたい。webでも同じように見れるように。mcapにする
 
 https://zenn.dev/uedake/articles/ros2_launch3_configulation
 SetParametersFromFile使えないか？
@@ -61,6 +62,6 @@ webauto-ci.ymlでsimulator_type毎に設定かけるようにするために現�
 
 ## 試す
 
-1. 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
-2. パラメータを後ろから付け足したら上書きできるか確認
-3. bagだけのやつをt4_dataset想定に変更
+- [ ] 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
+- [x] パラメータを後ろから付け足したら上書きできるか確認
+- [ ] bagだけのやつをt4_dataset想定に変更

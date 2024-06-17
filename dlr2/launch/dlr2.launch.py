@@ -27,29 +27,7 @@ from launch.substitutions import LaunchConfiguration
 import yaml
 
 
-def launch_autoware() -> IncludeLaunchDescription:
-    autoware_launch_file = Path(
-        get_package_share_directory("autoware_launch"),
-        "launch",
-        "logging_simulator.launch.xml",
-    )
-    launch_args = {
-        "map_path": LaunchConfiguration("map_path"),  # これだけは渡さないと動かない。
-    }
-    return GroupAction(
-        [
-            IncludeLaunchDescription(
-                AnyLaunchDescriptionSource(
-                    autoware_launch_file.as_posix(),
-                ),
-                launch_arguments=launch_args.items(),
-                # condition=IfCondition(LaunchConfiguration("with_autoware")),
-            ),
-        ],
-    )
-
-
-def launch_autoware_cb(context: LaunchContext) -> IncludeLaunchDescription:
+def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
     autoware_launch_file = Path(
         get_package_share_directory("autoware_launch"),
         "launch",
@@ -62,6 +40,8 @@ def launch_autoware_cb(context: LaunchContext) -> IncludeLaunchDescription:
     launch_args = {
         "map_path": params["map_path"],
         "vehicle_model": params["vehicle_model"],
+        "sensor_model": params["sensor_model"],
+        "vehicle_id": params["vehicle_id"],
     }
     return [
         GroupAction(
@@ -74,6 +54,8 @@ def launch_autoware_cb(context: LaunchContext) -> IncludeLaunchDescription:
                     # condition=IfCondition(LaunchConfiguration("with_autoware")),
                 ),
             ],
+            scoped=False,
+            forwarding=True,
         ),
     ]
 
@@ -115,8 +97,7 @@ def generate_launch_description() -> LaunchDescription:
                 description="launch evaluation(s)",
                 default_value="perception",
             ),
-            OpaqueFunction(function=launch_autoware_cb),
-            # launch_autoware(),  # OpaqueFunctionならautowareのarg出てこない。
+            OpaqueFunction(function=launch_autoware),
             # OpaqueFunction(function=launch_evaluators),
         ],
     )

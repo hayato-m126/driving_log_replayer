@@ -1,0 +1,9 @@
+/**:
+  ros__parameters:
+    # map_path: /home/hyt/map/oss  # absolute path
+    map_path: map # relative path
+    # dataset_path: /home/hyt/dlr_data/aw/perception/sample/t4_dataset/sample_dataset # absolute path
+    dataset_path: sample_dataset # relative path
+    vehicle_model: sample_vehicle
+    sensor_model: sample_sensor_kit
+    vehicle_id: default

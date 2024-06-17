@@ -19,12 +19,42 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchContext
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import ExecuteProcess
 from launch.actions import GroupAction
 from launch.actions import IncludeLaunchDescription
+from launch.actions import LogInfo
 from launch.actions import OpaqueFunction
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 import yaml
+
+
+def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
+    scenario_path = Path(context.launch_configurations["scenario_path"])
+    with scenario_path.open() as scenario_file:
+        yaml_obj = yaml.safe_load(scenario_file)
+    params = yaml_obj["/**"]["ros__parameters"]
+    input_bag_path = Path(params["dataset_path"], "input_bag")
+    if not input_bag_path.is_absolute():
+        input_bag_path = scenario_path.parent.joinpath(input_bag_path)
+
+    play_cmd = [
+        "ros2",
+        "bag",
+        "play",
+        input_bag_path.as_posix(),
+        "--rate",
+        LaunchConfiguration("bag_play_rate"),
+        "--clock",
+        "200",
+    ]
+    return [
+        ExecuteProcess(
+            cmd=["sleep", LaunchConfiguration("bag_play_delay")],
+            on_exit=[ExecuteProcess(cmd=play_cmd)],
+            output="screen",
+        ),
+    ]
 
 
 def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
@@ -33,17 +63,21 @@ def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
         "launch",
         "logging_simulator.launch.xml",
     )
-    scenario_path = Path(context.launch_configurations["dlr_scenario_file"])
+    scenario_path = Path(context.launch_configurations["scenario_path"])
     with scenario_path.open() as scenario_file:
         yaml_obj = yaml.safe_load(scenario_file)
     params = yaml_obj["/**"]["ros__parameters"]
+    map_path = Path(params["map_path"])
+    if not map_path.is_absolute():
+        map_path = scenario_path.parent.joinpath(map_path)
     launch_args = {
-        "map_path": params["map_path"],
+        "map_path": map_path.as_posix(),
         "vehicle_model": params["vehicle_model"],
         "sensor_model": params["sensor_model"],
         "vehicle_id": params["vehicle_id"],
     }
     return [
+        LogInfo(msg=f"{map_path=}"),
         GroupAction(
             [
                 IncludeLaunchDescription(
@@ -64,7 +98,7 @@ def launch_evaluators(context: LaunchContext) -> list:
     launch_file_dir = get_package_share_directory("dlr2") + "/launch/"
 
     multi_launch = []
-    launch_names_str = context.launch_configurations["dlr_launch_evaluations"]
+    launch_names_str = context.launch_configurations["evaluations"]
     launch_names_list: list = literal_eval(launch_names_str)
     for launch_name in launch_names_list:
         multi_launch.append(
@@ -77,7 +111,7 @@ def launch_evaluators(context: LaunchContext) -> list:
                     ],  # 文字列結合
                 ),
                 launch_arguments={
-                    "scenario_file": context.launch_configurations["dlr_scenario_file"],
+                    "scenario_file": context.launch_configurations["scenario_path"],
                 }.items(),
             ),
         )
@@ -88,16 +122,27 @@ def generate_launch_description() -> LaunchDescription:
     return LaunchDescription(
         [
             DeclareLaunchArgument(
-                "dlr_scenario_file",
-                description="scenario file",
-                default_value="/home/hyt/dlr_sample.yaml",
+                "bag_play_rate",
+                description="bag play rate",
+                default_value="1.0",
             ),
             DeclareLaunchArgument(
-                "dlr_launch_evaluations",
+                "bag_play_delay",
+                description="bag play delay",
+                default_value="10.0",
+            ),
+            DeclareLaunchArgument(
+                "scenario_path",
+                description="scenario file",
+                default_value="/home/hyt/dlr2/dlr_sample.yaml",
+            ),
+            DeclareLaunchArgument(
+                "evaluations",
                 description="launch evaluation(s)",
                 default_value="perception",
             ),
             OpaqueFunction(function=launch_autoware),
+            OpaqueFunction(function=launch_bag_player),
             # OpaqueFunction(function=launch_evaluators),
         ],
     )

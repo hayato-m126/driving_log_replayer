@@ -28,6 +28,11 @@ lanelet2_extension_pythonとか
 - ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} これだけで終わらせたい
 - foxgloveを前提にしたい。webでも同じように見れるように。mcapにする
 - rvizのコピーメンテするの面倒臭すぎるので、Autoware本体に更新に左右されないようにしたい。
+- 現状はbagの長さを切らないと評価の時間の指定は出来ないけど、dlrの評価によらない共通機能として、評価開始時間と終了時間を指定できるようにしたい。これによって共通のbagの使いまわしを楽にしたい。（なくてもいいかも）
+- ros1のときみたいに、bag playの方にrequiredをつけたい。今はノード側でclockが止まったら終了を判断している。
+- clock止まったあとに、最終メトリクス出したりしているから自分のノードで判定できるのも悪くないけど、後処理を別途起動できるようにしておけばいいような。
+- 後処理が自由にかけるなら、ndt_convergenceの評価は単にbag作ってるだけだから、後処理だけ書いてもらればいい。
+- AWSIMを使ってシミュレーションを実行しながら評価する方法もサポートしたい
 
 https://zenn.dev/uedake/articles/ros2_launch3_configulation
 SetParametersFromFile使えないか？
@@ -68,3 +73,4 @@ webauto-ci.ymlでsimulator_type毎に設定かけるようにするために現�
 - [x] 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
 - [x] パラメータを後ろから付け足したら上書きできるか確認
 - [x] bagだけのやつをt4_dataset想定に変更
+- [ ] bag playに OnProcessExit仕掛けられるか確認する。https://ubuntu.com/blog/ros2-launch-required-nodes

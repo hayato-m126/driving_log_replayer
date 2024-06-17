@@ -16,6 +16,8 @@ https://github.com/Box-Robotics/ros2_numpy/pull/6
 eveのケースとか
 lanelet2_extension_pythonとか
 
+ユースケース毎に依存が異なる。であれば、使うユースケース毎にパッケージを分割して、依存をユースケースに閉じ込める。本体は最低限のインターフェースだけにする。
+
 ## やりたい
 
 - 全部t4_datasetベースの設計に変えたい。
@@ -62,6 +64,6 @@ webauto-ci.ymlでsimulator_type毎に設定かけるようにするために現�
 
 ## 試す
 
-- [ ] 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
+- [x] 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
 - [x] パラメータを後ろから付け足したら上書きできるか確認
-- [ ] bagだけのやつをt4_dataset想定に変更
+- [x] bagだけのやつをt4_dataset想定に変更

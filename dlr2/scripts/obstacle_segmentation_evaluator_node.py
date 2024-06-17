@@ -22,8 +22,6 @@ from typing import TYPE_CHECKING
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 from driving_log_replayer_analyzer.data import convert_str_to_dist_type
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarker
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarkerArray
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import TransformStamped
 import lanelet2  # noqa
@@ -57,6 +55,8 @@ from dlr2.obstacle_segmentation import ObstacleSegmentationScenario
 from dlr2.obstacle_segmentation import set_ego_point
 from dlr2.obstacle_segmentation import transform_proposed_area
 import dlr2.perception_eval_conversions as eval_conversions
+from dlr2_msgs.msg import ObstacleSegmentationMarker
+from dlr2_msgs.msg import ObstacleSegmentationMarkerArray
 
 if TYPE_CHECKING:
     from perception_eval.common.dataset import FrameGroundTruth

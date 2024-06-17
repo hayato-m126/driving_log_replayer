@@ -26,8 +26,6 @@ from driving_log_replayer_analyzer.data import DistType
 from driving_log_replayer_analyzer.data.obstacle_segmentation import fail_3_times_in_a_row
 from driving_log_replayer_analyzer.data.obstacle_segmentation import JsonlParser
 from driving_log_replayer_analyzer.plot import PlotBase
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarker
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarkerArray
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import PointStamped
 from geometry_msgs.msg import Pose
@@ -60,6 +58,8 @@ from dlr2.result import EvaluationItem
 from dlr2.result import ResultBase
 from dlr2.scenario import number
 from dlr2.scenario import Scenario
+from dlr2_msgs.msg import ObstacleSegmentationMarker
+from dlr2_msgs.msg import ObstacleSegmentationMarkerArray
 
 
 def get_goal_pose_from_t4_dataset(dataset_path: str) -> PoseStamped:

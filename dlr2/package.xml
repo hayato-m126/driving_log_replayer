@@ -21,7 +21,7 @@
   <depend>autoware_map_msgs</depend>
   <depend>autoware_perception_msgs</depend>
   <depend>diagnostic_msgs</depend>
-  <depend>driving_log_replayer_msgs</depend>
+  <depend>dlr2_msgs</depend>
   <depend>example_interfaces</depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>

@@ -24,6 +24,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.actions import OpaqueFunction
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+import yaml
 
 
 def launch_autoware() -> IncludeLaunchDescription:
@@ -46,6 +47,35 @@ def launch_autoware() -> IncludeLaunchDescription:
             ),
         ],
     )
+
+
+def launch_autoware_cb(context: LaunchContext) -> IncludeLaunchDescription:
+    autoware_launch_file = Path(
+        get_package_share_directory("autoware_launch"),
+        "launch",
+        "logging_simulator.launch.xml",
+    )
+    scenario_path = Path(context.launch_configurations["dlr_scenario_file"])
+    with scenario_path.open() as scenario_file:
+        yaml_obj = yaml.safe_load(scenario_file)
+    params = yaml_obj["/**"]["ros__parameters"]
+    launch_args = {
+        "map_path": params["map_path"],
+        "vehicle_model": params["vehicle_model"],
+    }
+    return [
+        GroupAction(
+            [
+                IncludeLaunchDescription(
+                    AnyLaunchDescriptionSource(
+                        autoware_launch_file.as_posix(),
+                    ),
+                    launch_arguments=launch_args.items(),
+                    # condition=IfCondition(LaunchConfiguration("with_autoware")),
+                ),
+            ],
+        ),
+    ]
 
 
 def launch_evaluators(context: LaunchContext) -> list:
@@ -78,14 +108,15 @@ def generate_launch_description() -> LaunchDescription:
             DeclareLaunchArgument(
                 "dlr_scenario_file",
                 description="scenario file",
-                default_value="$HOME/dlr_sample.yaml",
+                default_value="/home/hyt/dlr_sample.yaml",
             ),
             DeclareLaunchArgument(
                 "dlr_launch_evaluations",
                 description="launch evaluation(s)",
                 default_value="perception",
             ),
-            launch_autoware(),  # OpaqueFunctionならautowareのarg出てこない。
+            OpaqueFunction(function=launch_autoware_cb),
+            # launch_autoware(),  # OpaqueFunctionならautowareのarg出てこない。
             # OpaqueFunction(function=launch_evaluators),
         ],
     )

@@ -19,6 +19,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchContext
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import GroupAction
 from launch.actions import IncludeLaunchDescription
 from launch.actions import OpaqueFunction
 from launch.launch_description_sources import AnyLaunchDescriptionSource
@@ -32,16 +33,18 @@ def launch_autoware() -> IncludeLaunchDescription:
         "logging_simulator.launch.xml",
     )
     launch_args = {
-        "map_path": LaunchConfiguration("map_path"),
-        "vehicle_model": LaunchConfiguration("vehicle_model"),
-        "sensor_model": LaunchConfiguration("sensor_model"),
+        "map_path": LaunchConfiguration("map_path"),  # これだけは渡さないと動かない。
     }
-    return IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(
-            autoware_launch_file.as_posix(),
-        ),
-        launch_arguments=launch_args.items(),
-        # condition=IfCondition(LaunchConfiguration("with_autoware")),
+    return GroupAction(
+        [
+            IncludeLaunchDescription(
+                AnyLaunchDescriptionSource(
+                    autoware_launch_file.as_posix(),
+                ),
+                launch_arguments=launch_args.items(),
+                # condition=IfCondition(LaunchConfiguration("with_autoware")),
+            ),
+        ],
     )
 
 
@@ -75,7 +78,7 @@ def generate_launch_description() -> LaunchDescription:
             DeclareLaunchArgument(
                 "dlr_scenario_file",
                 description="scenario file",
-                default_value="/home/hyt/dlr_sample.yaml",
+                default_value="$HOME/dlr_sample.yaml",
             ),
             DeclareLaunchArgument(
                 "dlr_launch_evaluations",

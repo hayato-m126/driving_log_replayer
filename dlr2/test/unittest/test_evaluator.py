@@ -14,7 +14,7 @@
 
 import pytest
 
-from driving_log_replayer.evaluator import DLREvaluator
+from dlr2.evaluator import DLREvaluator
 
 
 class SampleEvaluator(DLREvaluator):

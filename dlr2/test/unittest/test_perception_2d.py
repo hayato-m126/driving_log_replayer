@@ -28,10 +28,10 @@ from perception_eval.evaluation.result.perception_frame_config import CriticalOb
 from perception_eval.evaluation.result.perception_frame_config import PerceptionPassFailConfig
 import pytest
 
-from driving_log_replayer.perception_2d import Conditions
-from driving_log_replayer.perception_2d import Perception
-from driving_log_replayer.perception_2d import Perception2DScenario
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.perception_2d import Conditions
+from dlr2.perception_2d import Perception
+from dlr2.perception_2d import Perception2DScenario
+from dlr2.scenario import load_sample_scenario
 
 
 def test_scenario() -> None:

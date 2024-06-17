@@ -19,10 +19,10 @@ from os.path import expandvars
 
 from diagnostic_msgs.msg import DiagnosticArray
 
-from driving_log_replayer.annotationless_perception import AnnotationlessPerceptionResult
-from driving_log_replayer.annotationless_perception import AnnotationlessPerceptionScenario
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
+from dlr2.annotationless_perception import AnnotationlessPerceptionResult
+from dlr2.annotationless_perception import AnnotationlessPerceptionScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
 
 
 class AnnotationlessPerceptionEvaluator(DLREvaluator):

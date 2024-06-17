@@ -17,10 +17,10 @@
 
 from diagnostic_msgs.msg import DiagnosticArray
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.yabloc import YabLocResult
-from driving_log_replayer.yabloc import YablocScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.yabloc import YabLocResult
+from dlr2.yabloc import YablocScenario
 
 TARGET_DIAG_NAME = "yabloc_monitor: yabloc_status"
 

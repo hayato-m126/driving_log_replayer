@@ -19,12 +19,12 @@ from typing import Literal
 from pydantic import ValidationError
 import pytest
 
-from driving_log_replayer.annotationless_perception import AnnotationlessPerceptionScenario
-from driving_log_replayer.annotationless_perception import ClassConditionValue
-from driving_log_replayer.annotationless_perception import DiagValue
-from driving_log_replayer.annotationless_perception import ObjectMetrics
-from driving_log_replayer.result import get_sample_result_path
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.annotationless_perception import AnnotationlessPerceptionScenario
+from dlr2.annotationless_perception import ClassConditionValue
+from dlr2.annotationless_perception import DiagValue
+from dlr2.annotationless_perception import ObjectMetrics
+from dlr2.result import get_sample_result_path
+from dlr2.scenario import load_sample_scenario
 
 
 def test_scenario() -> None:

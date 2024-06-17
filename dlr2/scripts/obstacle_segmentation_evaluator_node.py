@@ -21,6 +21,9 @@ from typing import TYPE_CHECKING
 
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
+from driving_log_replayer_analyzer.data import convert_str_to_dist_type
+from driving_log_replayer_msgs.msg import ObstacleSegmentationMarker
+from driving_log_replayer_msgs.msg import ObstacleSegmentationMarkerArray
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import TransformStamped
 import lanelet2  # noqa
@@ -40,23 +43,20 @@ from std_msgs.msg import Header
 from tier4_api_msgs.msg import AwapiAutowareStatus
 from visualization_msgs.msg import MarkerArray
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.lanelet2_util import road_lanelets_from_file
-from driving_log_replayer.lanelet2_util import to_shapely_polygon
-from driving_log_replayer.obstacle_segmentation import default_config_path
-from driving_log_replayer.obstacle_segmentation import get_goal_pose_from_t4_dataset
-from driving_log_replayer.obstacle_segmentation import get_graph_data
-from driving_log_replayer.obstacle_segmentation import get_non_detection_area_in_base_link
-from driving_log_replayer.obstacle_segmentation import get_sensing_frame_config
-from driving_log_replayer.obstacle_segmentation import ObstacleSegmentationResult
-from driving_log_replayer.obstacle_segmentation import ObstacleSegmentationScenario
-from driving_log_replayer.obstacle_segmentation import set_ego_point
-from driving_log_replayer.obstacle_segmentation import transform_proposed_area
-import driving_log_replayer.perception_eval_conversions as eval_conversions
-from driving_log_replayer_analyzer.data import convert_str_to_dist_type
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarker
-from driving_log_replayer_msgs.msg import ObstacleSegmentationMarkerArray
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.lanelet2_util import road_lanelets_from_file
+from dlr2.lanelet2_util import to_shapely_polygon
+from dlr2.obstacle_segmentation import default_config_path
+from dlr2.obstacle_segmentation import get_goal_pose_from_t4_dataset
+from dlr2.obstacle_segmentation import get_graph_data
+from dlr2.obstacle_segmentation import get_non_detection_area_in_base_link
+from dlr2.obstacle_segmentation import get_sensing_frame_config
+from dlr2.obstacle_segmentation import ObstacleSegmentationResult
+from dlr2.obstacle_segmentation import ObstacleSegmentationScenario
+from dlr2.obstacle_segmentation import set_ego_point
+from dlr2.obstacle_segmentation import transform_proposed_area
+import dlr2.perception_eval_conversions as eval_conversions
 
 if TYPE_CHECKING:
     from perception_eval.common.dataset import FrameGroundTruth

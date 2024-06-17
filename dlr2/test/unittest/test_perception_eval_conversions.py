@@ -21,10 +21,10 @@ from pyquaternion.quaternion import Quaternion
 from shapely.geometry import Polygon
 from std_msgs.msg import Header
 
-from driving_log_replayer.perception_eval_conversions import footprint_from_ros_msg
-from driving_log_replayer.perception_eval_conversions import orientation_from_ros_msg
-from driving_log_replayer.perception_eval_conversions import position_from_ros_msg
-from driving_log_replayer.perception_eval_conversions import unix_time_from_ros_msg
+from dlr2.perception_eval_conversions import footprint_from_ros_msg
+from dlr2.perception_eval_conversions import orientation_from_ros_msg
+from dlr2.perception_eval_conversions import position_from_ros_msg
+from dlr2.perception_eval_conversions import unix_time_from_ros_msg
 
 
 def test_unix_time_from_ros_msg() -> None:

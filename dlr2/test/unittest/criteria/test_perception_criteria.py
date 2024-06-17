@@ -14,7 +14,7 @@
 
 import pytest
 
-from driving_log_replayer.criteria.perception import CriteriaLevel
+from dlr2.criteria.perception import CriteriaLevel
 
 
 def test_criteria_level_from_str_ok() -> None:

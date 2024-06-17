@@ -17,10 +17,10 @@
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 
-from driving_log_replayer.ar_tag_based_localizer import ArTagBasedLocalizerResult
-from driving_log_replayer.ar_tag_based_localizer import ArtagBasedLocalizerScenario
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
+from dlr2.ar_tag_based_localizer import ArTagBasedLocalizerResult
+from dlr2.ar_tag_based_localizer import ArtagBasedLocalizerScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
 
 TARGET_DIAG_NAME = "localization: ar_tag_based_localizer"
 

@@ -38,14 +38,14 @@ from perception_eval.tool import PerceptionAnalyzer2D
 from perception_eval.util.logger_config import configure_logger
 import rclpy
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.lanelet2_util import load_map
-import driving_log_replayer.perception_eval_conversions as eval_conversions
-from driving_log_replayer.traffic_light import FailResultHolder
-from driving_log_replayer.traffic_light import get_traffic_light_label_str
-from driving_log_replayer.traffic_light import TrafficLightResult
-from driving_log_replayer.traffic_light import TrafficLightScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.lanelet2_util import load_map
+import dlr2.perception_eval_conversions as eval_conversions
+from dlr2.traffic_light import FailResultHolder
+from dlr2.traffic_light import get_traffic_light_label_str
+from dlr2.traffic_light import TrafficLightResult
+from dlr2.traffic_light import TrafficLightScenario
 
 if TYPE_CHECKING:
     from perception_eval.evaluation import PerceptionFrameResult

@@ -21,12 +21,12 @@ from geometry_msgs.msg import PoseStamped
 from tier4_debug_msgs.msg import Float32Stamped
 from tier4_debug_msgs.msg import Int32Stamped
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.localization import calc_pose_horizontal_distance
-from driving_log_replayer.localization import calc_pose_lateral_distance
-from driving_log_replayer.localization import LocalizationResult
-from driving_log_replayer.localization import LocalizationScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.localization import calc_pose_horizontal_distance
+from dlr2.localization import calc_pose_lateral_distance
+from dlr2.localization import LocalizationResult
+from dlr2.localization import LocalizationScenario
 
 TARGET_DIAG_NAME = "topic_state_monitor_ndt_scan_matcher_exe_time: localization_topic_status"
 

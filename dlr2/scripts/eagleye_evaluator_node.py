@@ -17,10 +17,10 @@
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 
-from driving_log_replayer.eagleye import EagleyeResult
-from driving_log_replayer.eagleye import EagleyeScenario
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
+from dlr2.eagleye import EagleyeResult
+from dlr2.eagleye import EagleyeScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
 
 TARGET_DIAG_NAME = "monitor: eagleye_enu_absolute_pos_interpolate"
 

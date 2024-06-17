@@ -17,12 +17,12 @@ from diagnostic_msgs.msg import KeyValue
 from example_interfaces.msg import Byte
 from example_interfaces.msg import Float64
 
-from driving_log_replayer.performance_diag import Blockage
-from driving_log_replayer.performance_diag import BlockageCondition
-from driving_log_replayer.performance_diag import PerformanceDiagScenario
-from driving_log_replayer.performance_diag import Visibility
-from driving_log_replayer.performance_diag import VisibilityCondition
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.performance_diag import Blockage
+from dlr2.performance_diag import BlockageCondition
+from dlr2.performance_diag import PerformanceDiagScenario
+from dlr2.performance_diag import Visibility
+from dlr2.performance_diag import VisibilityCondition
+from dlr2.scenario import load_sample_scenario
 
 
 def test_scenario() -> None:

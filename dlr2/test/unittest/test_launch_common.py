@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from driving_log_replayer.launch_common import snake_to_pascal
+from dlr2.launch_common import snake_to_pascal
 
 
 def test_snake_to_pascal() -> None:

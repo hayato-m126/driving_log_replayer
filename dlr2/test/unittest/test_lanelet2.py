@@ -23,7 +23,7 @@ from lanelet2.geometry import distance
 from lanelet2_extension_python.utility.query import getLaneletsWithinRange
 from shapely.geometry import Polygon
 
-from driving_log_replayer.lanelet2_util import to_shapely_polygon
+from dlr2.lanelet2_util import to_shapely_polygon
 
 # refer lanelet2_example
 # https://github.com/fzi-forschungszentrum-informatik/Lanelet2/blob/master/lanelet2_examples/scripts/tutorial.py

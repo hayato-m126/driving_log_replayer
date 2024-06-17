@@ -24,9 +24,9 @@ from pydantic import BaseModel
 from pydantic import field_validator
 import simplejson as json
 
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import Scenario
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import Scenario
 
 OBJECT_CLASSIFICATION_TUPLE = (
     "UNKNOWN",

@@ -24,7 +24,7 @@ from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-from driving_log_replayer.shutdown_once import ShutdownOnce
+from dlr2.shutdown_once import ShutdownOnce
 
 
 def get_launch_arguments() -> list:

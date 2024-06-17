@@ -42,15 +42,15 @@ from std_msgs.msg import Header
 from tf_transformations import quaternion_from_euler
 from visualization_msgs.msg import Marker
 
-from driving_log_replayer.obstacle_segmentation import Detection
-from driving_log_replayer.obstacle_segmentation import DetectionCondition
-from driving_log_replayer.obstacle_segmentation import get_non_detection_area_in_base_link
-from driving_log_replayer.obstacle_segmentation import NonDetection
-from driving_log_replayer.obstacle_segmentation import NonDetectionCondition
-from driving_log_replayer.obstacle_segmentation import ObstacleSegmentationScenario
-from driving_log_replayer.obstacle_segmentation import ProposedAreaCondition
-from driving_log_replayer.obstacle_segmentation import transform_proposed_area
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.obstacle_segmentation import Detection
+from dlr2.obstacle_segmentation import DetectionCondition
+from dlr2.obstacle_segmentation import get_non_detection_area_in_base_link
+from dlr2.obstacle_segmentation import NonDetection
+from dlr2.obstacle_segmentation import NonDetectionCondition
+from dlr2.obstacle_segmentation import ObstacleSegmentationScenario
+from dlr2.obstacle_segmentation import ProposedAreaCondition
+from dlr2.obstacle_segmentation import transform_proposed_area
+from dlr2.scenario import load_sample_scenario
 
 
 def test_scenario() -> None:

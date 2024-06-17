@@ -23,13 +23,13 @@ from std_msgs.msg import ColorRGBA
 from std_msgs.msg import Header
 from visualization_msgs.msg import MarkerArray
 
-from driving_log_replayer.criteria import PerceptionCriteria
-import driving_log_replayer.perception_eval_conversions as eval_conversions
-from driving_log_replayer.perception_eval_conversions import summarize_pass_fail_result
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import number
-from driving_log_replayer.scenario import Scenario
+from dlr2.criteria import PerceptionCriteria
+import dlr2.perception_eval_conversions as eval_conversions
+from dlr2.perception_eval_conversions import summarize_pass_fail_result
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import number
+from dlr2.scenario import Scenario
 
 
 class Filter(BaseModel):

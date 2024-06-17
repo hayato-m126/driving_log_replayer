@@ -29,11 +29,11 @@ from rosidl_runtime_py import message_to_ordereddict
 from tier4_debug_msgs.msg import Float32Stamped
 from tier4_debug_msgs.msg import Int32Stamped
 
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import InitialPose as InitialPoseModel
-from driving_log_replayer.scenario import number
-from driving_log_replayer.scenario import Scenario
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import InitialPose as InitialPoseModel
+from dlr2.scenario import number
+from dlr2.scenario import Scenario
 
 
 def calc_pose_lateral_distance(relative_pose: PoseStamped) -> float:

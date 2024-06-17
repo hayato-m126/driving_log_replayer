@@ -18,11 +18,11 @@ from typing import Literal
 from perception_eval.evaluation import PerceptionFrameResult
 from pydantic import BaseModel
 
-from driving_log_replayer.criteria import PerceptionCriteria
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import number
-from driving_log_replayer.scenario import Scenario
+from dlr2.criteria import PerceptionCriteria
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import number
+from dlr2.scenario import Scenario
 
 
 class Conditions(BaseModel):

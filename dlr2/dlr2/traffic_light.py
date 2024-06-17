@@ -24,12 +24,12 @@ from pydantic import BaseModel
 from pydantic import field_validator
 import simplejson as json
 
-from driving_log_replayer.criteria import PerceptionCriteria
-from driving_log_replayer.perception_eval_conversions import summarize_pass_fail_result
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import number
-from driving_log_replayer.scenario import Scenario
+from dlr2.criteria import PerceptionCriteria
+from dlr2.perception_eval_conversions import summarize_pass_fail_result
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import number
+from dlr2.scenario import Scenario
 
 TRAFFIC_LIGHT_LABEL_MAPPINGS: list[tuple[set, str]] = [
     ({"green"}, "green"),

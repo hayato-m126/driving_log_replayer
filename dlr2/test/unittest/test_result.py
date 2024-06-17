@@ -21,8 +21,8 @@ from rclpy.clock import ClockType
 from rclpy.clock import ROSClock
 from rclpy.time import Time
 
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.result import ResultWriter
+from dlr2.result import ResultBase
+from dlr2.result import ResultWriter
 
 
 class SampleResult(ResultBase):

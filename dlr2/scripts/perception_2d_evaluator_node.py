@@ -30,11 +30,11 @@ import rclpy
 from tier4_perception_msgs.msg import DetectedObjectsWithFeature
 from tier4_perception_msgs.msg import DetectedObjectWithFeature
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.perception_2d import Perception2DResult
-from driving_log_replayer.perception_2d import Perception2DScenario
-import driving_log_replayer.perception_eval_conversions as eval_conversions
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.perception_2d import Perception2DResult
+from dlr2.perception_2d import Perception2DScenario
+import dlr2.perception_eval_conversions as eval_conversions
 
 if TYPE_CHECKING:
     from perception_eval.evaluation import PerceptionFrameResult

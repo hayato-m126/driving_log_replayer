@@ -23,10 +23,10 @@ from example_interfaces.msg import Byte
 from example_interfaces.msg import Float64
 from pydantic import BaseModel
 
-from driving_log_replayer.result import EvaluationItem
-from driving_log_replayer.result import ResultBase
-from driving_log_replayer.scenario import InitialPose
-from driving_log_replayer.scenario import Scenario
+from dlr2.result import EvaluationItem
+from dlr2.result import ResultBase
+from dlr2.scenario import InitialPose
+from dlr2.scenario import Scenario
 
 INVALID_FLOAT_VALUE = -99.9
 

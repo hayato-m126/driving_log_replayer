@@ -14,9 +14,9 @@
 
 from diagnostic_msgs.msg import DiagnosticStatus
 
-from driving_log_replayer.eagleye import Availability
-from driving_log_replayer.eagleye import EagleyeScenario
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.eagleye import Availability
+from dlr2.eagleye import EagleyeScenario
+from dlr2.scenario import load_sample_scenario
 
 TARGET_DIAG_NAME = "monitor: eagleye_enu_absolute_pos_interpolate"
 

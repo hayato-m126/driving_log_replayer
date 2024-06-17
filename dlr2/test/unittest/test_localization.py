@@ -22,13 +22,13 @@ import pytest
 from tier4_debug_msgs.msg import Float32Stamped
 from tier4_debug_msgs.msg import Int32Stamped
 
-from driving_log_replayer.localization import Availability
-from driving_log_replayer.localization import Convergence
-from driving_log_replayer.localization import ConvergenceCondition
-from driving_log_replayer.localization import LocalizationScenario
-from driving_log_replayer.localization import Reliability
-from driving_log_replayer.localization import ReliabilityCondition
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.localization import Availability
+from dlr2.localization import Convergence
+from dlr2.localization import ConvergenceCondition
+from dlr2.localization import LocalizationScenario
+from dlr2.localization import Reliability
+from dlr2.localization import ReliabilityCondition
+from dlr2.scenario import load_sample_scenario
 
 TARGET_DIAG_NAME = "topic_state_monitor_ndt_scan_matcher_exe_time: localization_topic_status"
 

@@ -14,7 +14,7 @@
 
 import launch
 
-import driving_log_replayer.launch_common as cmn
+import dlr2.launch_common as cmn
 
 RECORD_TOPIC_REGEX = """^/clock$\
 |^/tf$\

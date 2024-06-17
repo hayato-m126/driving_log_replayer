@@ -15,9 +15,9 @@
 from diagnostic_msgs.msg import DiagnosticStatus
 from diagnostic_msgs.msg import KeyValue
 
-from driving_log_replayer.scenario import load_sample_scenario
-from driving_log_replayer.yabloc import Availability
-from driving_log_replayer.yabloc import YablocScenario
+from dlr2.scenario import load_sample_scenario
+from dlr2.yabloc import Availability
+from dlr2.yabloc import YablocScenario
 
 TARGET_DIAG_NAME = "yabloc_monitor: yabloc_status"
 

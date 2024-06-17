@@ -28,11 +28,11 @@ from perception_eval.evaluation.result.perception_frame_config import CriticalOb
 from perception_eval.evaluation.result.perception_frame_config import PerceptionPassFailConfig
 import pytest
 
-from driving_log_replayer.scenario import load_sample_scenario
-from driving_log_replayer.traffic_light import Criteria
-from driving_log_replayer.traffic_light import Filter
-from driving_log_replayer.traffic_light import Perception
-from driving_log_replayer.traffic_light import TrafficLightScenario
+from dlr2.scenario import load_sample_scenario
+from dlr2.traffic_light import Criteria
+from dlr2.traffic_light import Filter
+from dlr2.traffic_light import Perception
+from dlr2.traffic_light import TrafficLightScenario
 
 
 def test_scenario() -> None:

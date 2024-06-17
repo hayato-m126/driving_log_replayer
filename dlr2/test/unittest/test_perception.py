@@ -31,11 +31,11 @@ from perception_eval.evaluation.result.perception_frame_config import Perception
 from pyquaternion import Quaternion
 import pytest
 
-from driving_log_replayer.perception import Criteria
-from driving_log_replayer.perception import Filter
-from driving_log_replayer.perception import Perception
-from driving_log_replayer.perception import PerceptionScenario
-from driving_log_replayer.scenario import load_sample_scenario
+from dlr2.perception import Criteria
+from dlr2.perception import Filter
+from dlr2.perception import Perception
+from dlr2.perception import PerceptionScenario
+from dlr2.scenario import load_sample_scenario
 
 
 def test_scenario() -> None:

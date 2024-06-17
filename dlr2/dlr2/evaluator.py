@@ -47,10 +47,10 @@ from tier4_localization_msgs.srv import InitializeLocalization
 from tier4_localization_msgs.srv import PoseWithCovarianceStamped as PoseWithCovarianceStampedSrv
 import yaml
 
-from driving_log_replayer.result import PickleWriter
-from driving_log_replayer.result import ResultWriter
-from driving_log_replayer.scenario import InitialPose
-from driving_log_replayer.scenario import load_scenario
+from dlr2.result import PickleWriter
+from dlr2.result import ResultWriter
+from dlr2.scenario import InitialPose
+from dlr2.scenario import load_scenario
 
 if TYPE_CHECKING:
     from autoware_common_msgs.msg import ResponseStatus

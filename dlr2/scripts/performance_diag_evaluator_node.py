@@ -22,10 +22,10 @@ from diagnostic_msgs.msg import DiagnosticStatus
 from example_interfaces.msg import Byte
 from example_interfaces.msg import Float64
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.performance_diag import PerformanceDiagResult
-from driving_log_replayer.performance_diag import PerformanceDiagScenario
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.performance_diag import PerformanceDiagResult
+from dlr2.performance_diag import PerformanceDiagScenario
 
 REGEX_VISIBILITY_DIAG_NAME = "dual_return_filter: /sensing/lidar/.*: visibility_validation"
 BLOCKAGE_DIAG_NAME = "blockage_return_diag: /sensing/lidar/.*: blockage_validation"

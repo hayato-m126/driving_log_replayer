@@ -39,11 +39,11 @@ from perception_eval.util.logger_config import configure_logger
 import rclpy
 from visualization_msgs.msg import MarkerArray
 
-from driving_log_replayer.evaluator import DLREvaluator
-from driving_log_replayer.evaluator import evaluator_main
-from driving_log_replayer.perception import PerceptionResult
-from driving_log_replayer.perception import PerceptionScenario
-import driving_log_replayer.perception_eval_conversions as eval_conversions
+from dlr2.evaluator import DLREvaluator
+from dlr2.evaluator import evaluator_main
+from dlr2.perception import PerceptionResult
+from dlr2.perception import PerceptionScenario
+import dlr2.perception_eval_conversions as eval_conversions
 
 
 class PerceptionEvaluator(DLREvaluator):

@@ -27,6 +27,7 @@ lanelet2_extension_pythonとか
 - cliをなくす。わかりにくい。シナリオをパースして必要なargを作ってるし、やっぱりシナリオファイルを引数に指定しているこれは無駄では。webauto側もlaunch引数が変わることで、I/Fが変わってしまう。それを吸収するためにwasimやdlr_cliがいるのはなんか違う。
 - ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} これだけで終わらせたい
 - foxgloveを前提にしたい。webでも同じように見れるように。mcapにする
+- rvizのコピーメンテするの面倒臭すぎるので、Autoware本体に更新に左右されないようにしたい。
 
 https://zenn.dev/uedake/articles/ros2_launch3_configulation
 SetParametersFromFile使えないか？

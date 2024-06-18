@@ -42,19 +42,19 @@ def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
     if not input_bag_path.is_absolute():
         input_bag_path = scenario_path.parent.joinpath(input_bag_path)
 
-    play_cmd = [
-        "ros2",
-        "bag",
-        "play",
-        input_bag_path.as_posix(),
-        "--rate",
-        LaunchConfiguration("bag_play_rate"),
-        "--clock",
-        "200",
-    ]
     bag_player = ExecuteProcess(
-        cmd=["sleep", LaunchConfiguration("bag_play_delay")],
-        on_exit=[ExecuteProcess(cmd=play_cmd)],
+        cmd=[
+            "ros2",
+            "bag",
+            "play",
+            input_bag_path.as_posix(),
+            "--delay",
+            LaunchConfiguration("bag_play_delay"),
+            "--rate",
+            LaunchConfiguration("bag_play_rate"),
+            "--clock",
+            "200",
+        ],
         output="screen",
     )
     return [

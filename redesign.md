@@ -27,9 +27,6 @@ https://github.com/Box-Robotics/ros2_numpy/pull/6
 
 ## やりたい
 
-- 複数の評価を一変に回したい。perceptionとannotationless_perceptionは一緒でいいだろうという気持ちがある。どっちかだけの切り替えも可能にしたい
-- scenario format yaml を pyadanticでスキーマーガチガチに固める
-- result format jsonl を pydanticでスキーマーガチガチに固める
 - 現状はbagの長さを切らないと評価の時間の指定は出来ないけど、dlrの評価によらない共通機能として、評価開始時間と終了時間を指定できるようにしたい。これによって共通のbagの使いまわしを楽にしたい。（なくてもいいかも）
 - clock止まったあとに、最終メトリクス出したりしているから自分のノードで終了判定できるのも悪くないけど、後処理をOnExitで別途起動できるようにしておけばいいような。
 - 後処理が自由にかけるなら、ndt_convergenceの評価は単にbag作ってるだけだから、後処理だけ書いてもらればいい。
@@ -47,6 +44,9 @@ https://github.com/Box-Robotics/ros2_numpy/pull/6
 - ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} evaluations:="['perception', "annotationless_perception']" 2つ必須の想定
 - 全部t4_datasetベースの設計に変えたい。scenarioにdataset_pathを記述(絶対パス/相対パスの両方の指定が可能)、dataset_path/input_bagを指定すればbag playできる。
 - 今のディレクトリ固定の構成をやめたい。webautoのディレクトリにあるt4_datasetをシナリオから指定してdlr simulation runとかもやりたい。↑でできる。
+- 複数の評価を一変に回したい。引数でlaunchするevaluator_nodeを動的に変えるのは出来た。evaluator_node毎にresult.jsonlのファイル名か変えるなど追加で必要だがとりあえずできそう。
+- scenario format yaml を pydanticでスキーマーガチガチに固める。やればできる
+- result format jsonl を pydanticでスキーマーガチガチに固める。やればできる
 
 ## あったらいいかなくらい
 

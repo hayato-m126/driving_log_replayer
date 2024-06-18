@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from ast import literal_eval
+import datetime
 from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
@@ -31,6 +32,8 @@ from launch.events import Shutdown
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 import yaml
+
+from dlr2.shutdown_once import ShutdownOnce
 
 
 def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
@@ -63,10 +66,39 @@ def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
             event_handler=OnProcessExit(
                 target_action=bag_player,
                 on_exit=[
-                    LogInfo(msg="player exit tearing down entire system."),
+                    LogInfo(msg="Player exited; tearing down entire system."),
+                    # EmitEvent(event=ShutdownOnce()), # not working
                     EmitEvent(event=Shutdown()),
                 ],
             ),
+        ),
+    ]
+
+
+def launch_bag_recorder(context: LaunchContext) -> IncludeLaunchDescription:
+    output_path = Path(context.launch_configurations["output_path"], "result_bag")
+
+    return [
+        ExecuteProcess(
+            cmd=[
+                "ros2",
+                "bag",
+                "record",
+                "-s",
+                "mcap",
+                "-o",
+                output_path.as_posix(),
+                # "--qos-profile-overrides-path",
+                # Path(
+                #     get_package_share_directory("driving_log_replayer"),
+                #     "config",
+                #     record_config_name,
+                # ).as_posix(),
+                # "-e",
+                # allowlist,
+                "-a",
+                "--use-sim-time",
+            ],
         ),
     ]
 
@@ -132,6 +164,16 @@ def launch_evaluators(context: LaunchContext) -> list:
     return multi_launch
 
 
+def create_output_path(context: LaunchContext) -> list:
+    output_dir_by_time = Path(
+        context.launch_configurations["output_path"],
+        datetime.datetime.now().strftime("%Y-%m%d-%H%M%S"),  # noqa
+    )
+    output_dir_by_time.mkdir()
+    context.launch_configurations["output_path"] = output_dir_by_time.as_posix()
+    return [LogInfo(msg=f"{output_dir_by_time=}")]
+
+
 def generate_launch_description() -> LaunchDescription:
     return LaunchDescription(
         [
@@ -153,10 +195,17 @@ def generate_launch_description() -> LaunchDescription:
             DeclareLaunchArgument(
                 "evaluations",
                 description="launch evaluation(s)",
-                default_value="perception",
+                default_value="[]",  # default launch no evaluator node
             ),
+            DeclareLaunchArgument(
+                "output_path",
+                description="Directory to output result.jsonl, rosbag, and pickle",
+                default_value="/home/hyt/dlr2/output",
+            ),
+            OpaqueFunction(function=create_output_path),
             OpaqueFunction(function=launch_autoware),
             OpaqueFunction(function=launch_bag_player),
-            # OpaqueFunction(function=launch_evaluators),
+            OpaqueFunction(function=launch_bag_recorder),
+            OpaqueFunction(function=launch_evaluators),
         ],
     )

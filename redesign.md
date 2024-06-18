@@ -1,5 +1,13 @@
 # 再設計
 
+driving_log_replayerを再設計する。
+ROS 2 dashingのときに開発が始まってフレームワークも作る側も未成熟なままとりあえず動くものを作った。
+フレームワークも作る側の理解も進歩して、現状の設計だと良くないところ、気になる部分が出てきている。
+
+課題に思ってること、出来たらいいことを上げて、検証して、新しい設計を作る。
+
+## 課題
+
 rosのdependencyはバージョン指定しているわけじゃないから勝手にライブラリのバージョン上がることがある。
 
 pytestが上がって、colcon testが動かなくなった例
@@ -13,30 +21,32 @@ https://github.com/Box-Robotics/ros2_numpy/pull/6
 何もしてないのに壊れたのパターン。何もしてないからこそ壊れている。
 
 だけど、最新化するときに、プロダクトで使ってないやつの更新も入ってたり、影響があるのかないのか判定するのも難しい。
-eveのケースとか
-lanelet2_extension_pythonとか
 
-ユースケース毎に依存が異なる。であれば、使うユースケース毎にパッケージを分割して、依存をユースケースに閉じ込める。本体は最低限のインターフェースだけにする。
+ユースケース毎に依存が異なる。であれば、使うユースケース毎にパッケージを分割して、依存をユースケースに閉じ込める。
+本体は最低限のインターフェースだけにする。
 
 ## やりたい
 
-- 全部t4_datasetベースの設計に変えたい。
-- scenario format スキーマーでガチガチに固める
-- result format スキーマーでガチガチに固める
-- 今のディレクトリ固定の構成をやめたい。webautoのディレクトリにあるt4_datasetをシナリオから指定してdlr simulation runとかもやりたい
-- cliをなくす。わかりにくい。シナリオをパースして必要なargを作ってるし、やっぱりシナリオファイルを引数に指定しているこれは無駄では。webauto側もlaunch引数が変わることで、I/Fが変わってしまう。それを吸収するためにwasimやdlr_cliがいるのはなんか違う。
-- ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} これだけで終わらせたい
-- foxgloveを前提にしたい。webでも同じように見れるように。mcapにする
-- rvizのコピーメンテするの面倒臭すぎるので、Autoware本体に更新に左右されないようにしたい。
+- 複数の評価を一変に回したい。perceptionとannotationless_perceptionは一緒でいいだろうという気持ちがある。どっちかだけの切り替えも可能にしたい
+- scenario format yaml を pyadanticでスキーマーガチガチに固める
+- result format jsonl を pydanticでスキーマーガチガチに固める
 - 現状はbagの長さを切らないと評価の時間の指定は出来ないけど、dlrの評価によらない共通機能として、評価開始時間と終了時間を指定できるようにしたい。これによって共通のbagの使いまわしを楽にしたい。（なくてもいいかも）
-- ros1のときみたいに、bag playの方にrequiredをつけたい。今はノード側でclockが止まったら終了を判断している。
-- clock止まったあとに、最終メトリクス出したりしているから自分のノードで判定できるのも悪くないけど、後処理を別途起動できるようにしておけばいいような。
+- clock止まったあとに、最終メトリクス出したりしているから自分のノードで終了判定できるのも悪くないけど、後処理をOnExitで別途起動できるようにしておけばいいような。
 - 後処理が自由にかけるなら、ndt_convergenceの評価は単にbag作ってるだけだから、後処理だけ書いてもらればいい。
 - AWSIMを使ってシミュレーションを実行しながら評価する方法もサポートしたい
 
-https://zenn.dev/uedake/articles/ros2_launch3_configulation
-SetParametersFromFile使えないか？
-https://qiita.com/srs/items/9ab7456e4a3a4c5cf645
+### GUI
+
+- foxgloveを前提にしたい。webでも同じように見れるように。mcapにする
+- rvizのコピーメンテするの面倒臭すぎるので、Autoware本体に更新に左右されないようにしたい。
+
+## サンプル実装で実現可能を確認した
+
+- ros1のときみたいに、bag playの方にrequiredをつけたい。今はノード側でclockが止まったら終了を判断している。
+- cliをなくす。わかりにくい。シナリオをパースして必要なargを作ってるし、シナリオファイル自体も引数に指定しているこれは無駄。webauto側もlaunch引数が変わることで、I/Fが変わってしまう。それを吸収するためにwasimやdlr_cliがいるのは違う。launchの中でyamlを処理する仕組みに変更
+- ros2 launch driving_log_replayer driving_log_replayer.launch.py scenario_path:=${scenario_path} evaluations:="['perception', "annotationless_perception']" 2つ必須の想定
+- 全部t4_datasetベースの設計に変えたい。scenarioにdataset_pathを記述(絶対パス/相対パスの両方の指定が可能)、dataset_path/input_bagを指定すればbag playできる。
+- 今のディレクトリ固定の構成をやめたい。webautoのディレクトリにあるt4_datasetをシナリオから指定してdlr simulation runとかもやりたい。↑でできる。
 
 ## あったらいいかなくらい
 
@@ -73,4 +83,5 @@ webauto-ci.ymlでsimulator_type毎に設定かけるようにするために現�
 - [x] 親のlaunchにyamlを渡して、yamlをパースして、評価用のlaunchを呼べるか
 - [x] パラメータを後ろから付け足したら上書きできるか確認
 - [x] bagだけのやつをt4_dataset想定に変更
-- [ ] bag playに OnProcessExit仕掛けられるか確認する。https://ubuntu.com/blog/ros2-launch-required-nodes
+- [x] bag playに OnProcessExit仕掛けられるか確認する。https://ubuntu.com/blog/ros2-launch-required-nodes
+- [x] launchの中でデータ出力先のディレクトクトリを作成する

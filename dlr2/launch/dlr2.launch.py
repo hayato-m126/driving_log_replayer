@@ -19,11 +19,15 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchContext
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import EmitEvent
 from launch.actions import ExecuteProcess
 from launch.actions import GroupAction
 from launch.actions import IncludeLaunchDescription
 from launch.actions import LogInfo
 from launch.actions import OpaqueFunction
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
+from launch.events import Shutdown
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 import yaml
@@ -48,11 +52,21 @@ def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
         "--clock",
         "200",
     ]
+    bag_player = ExecuteProcess(
+        cmd=["sleep", LaunchConfiguration("bag_play_delay")],
+        on_exit=[ExecuteProcess(cmd=play_cmd)],
+        output="screen",
+    )
     return [
-        ExecuteProcess(
-            cmd=["sleep", LaunchConfiguration("bag_play_delay")],
-            on_exit=[ExecuteProcess(cmd=play_cmd)],
-            output="screen",
+        bag_player,
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=bag_player,
+                on_exit=[
+                    LogInfo(msg="player exit tearing down entire system."),
+                    EmitEvent(event=Shutdown()),
+                ],
+            ),
         ),
     ]
 

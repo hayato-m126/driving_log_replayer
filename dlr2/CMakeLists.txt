@@ -30,6 +30,8 @@ install(PROGRAMS
   scripts/eagleye_evaluator_node.py
   scripts/ar_tag_based_localizer_evaluator_node.py
   scripts/annotationless_perception_evaluator_node.py
+  scripts/listener_evaluator_node.py
+  scripts/talker_evaluator_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

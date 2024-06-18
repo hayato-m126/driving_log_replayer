@@ -31,26 +31,19 @@ from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 import yaml
 
 from dlr2.shutdown_once import ShutdownOnce
 
 
 def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
-    scenario_path = Path(context.launch_configurations["scenario_path"])
-    with scenario_path.open() as scenario_file:
-        yaml_obj = yaml.safe_load(scenario_file)
-    params = yaml_obj["/**"]["ros__parameters"]
-    input_bag_path = Path(params["dataset_path"], "input_bag")
-    if not input_bag_path.is_absolute():
-        input_bag_path = scenario_path.parent.joinpath(input_bag_path)
-
     bag_player = ExecuteProcess(
         cmd=[
             "ros2",
             "bag",
             "play",
-            input_bag_path.as_posix(),
+            context.launch_configurations["input_bag"],
             "--delay",
             LaunchConfiguration("bag_play_delay"),
             "--rate",
@@ -113,17 +106,13 @@ def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
     with scenario_path.open() as scenario_file:
         yaml_obj = yaml.safe_load(scenario_file)
     params = yaml_obj["/**"]["ros__parameters"]
-    map_path = Path(params["map_path"])
-    if not map_path.is_absolute():
-        map_path = scenario_path.parent.joinpath(map_path)
     launch_args = {
-        "map_path": map_path.as_posix(),
+        "map_path": params["map_path"],
         "vehicle_model": params["vehicle_model"],
         "sensor_model": params["sensor_model"],
         "vehicle_id": params["vehicle_id"],
     }
     return [
-        LogInfo(msg=f"{map_path=}"),
         GroupAction(
             [
                 IncludeLaunchDescription(
@@ -141,27 +130,56 @@ def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
 
 
 def launch_evaluators(context: LaunchContext) -> list:
-    launch_file_dir = get_package_share_directory("dlr2") + "/launch/"
+    params = {
+        "use_sim_time": True,
+        "scenario_path": context.launch_configurations["scenario_path"],
+        "result_json_path": Path(
+            context.launch_configurations["output_path"],
+            "result.jsonl",
+        ).as_posix(),
+        "t4_dataset_path": context.launch_configurations["dataset_path"],
+        "result_archive_path": Path(
+            context.launch_configurations["output_path"],
+            "result_archive",
+        ).as_posix(),
+    }
 
     multi_launch = []
     launch_names_str = context.launch_configurations["evaluations"]
     launch_names_list: list = literal_eval(launch_names_str)
-    for launch_name in launch_names_list:
+    for node_name in launch_names_list:
         multi_launch.append(
-            IncludeLaunchDescription(
-                AnyLaunchDescriptionSource(
-                    [
-                        launch_file_dir,
-                        launch_name,
-                        ".launch.py",
-                    ],  # 文字列結合
-                ),
-                launch_arguments={
-                    "scenario_file": context.launch_configurations["scenario_path"],
-                }.items(),
+            Node(
+                package="dlr2",
+                namespace="/dlr2",
+                executable=node_name + "_evaluator_node.py",
+                output="screen",
+                name=node_name + "_evaluator",
+                parameters=[context.launch_configurations["scenario_path"], params],
+                on_exit=ShutdownOnce(),
             ),
         )
     return multi_launch
+
+
+def update_resource_path(context: LaunchContext) -> list:
+    scenario_path = Path(context.launch_configurations["scenario_path"])
+    with scenario_path.open() as scenario_file:
+        yaml_obj = yaml.safe_load(scenario_file)
+    params = yaml_obj["/**"]["ros__parameters"]
+    map_path = Path(params["map_path"])
+    if not map_path.is_absolute():
+        map_path = scenario_path.parent.joinpath(map_path)
+    dataset_path = Path(params["dataset_path"])
+    if not dataset_path.is_absolute():
+        dataset_path = scenario_path.parent.joinpath(dataset_path)
+    context.launch_configurations["map_path"] = map_path.as_posix()
+    context.launch_configurations["dataset_path"] = dataset_path.as_posix()
+    # add configurations
+    context.launch_configurations["input_bag"] = dataset_path.joinpath("input_bag").as_posix()
+    return [
+        LogInfo(msg=f"{map_path=}, {dataset_path=}"),
+    ]
 
 
 def create_output_path(context: LaunchContext) -> list:
@@ -202,6 +220,7 @@ def generate_launch_description() -> LaunchDescription:
                 description="Directory to output result.jsonl, rosbag, and pickle",
                 default_value="/home/hyt/dlr2/output",
             ),
+            OpaqueFunction(function=update_resource_path),
             OpaqueFunction(function=create_output_path),
             OpaqueFunction(function=launch_autoware),
             OpaqueFunction(function=launch_bag_player),

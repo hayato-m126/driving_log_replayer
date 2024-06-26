@@ -7,14 +7,17 @@
     vehicle_model: sample_vehicle
     sensor_model: sample_sensor_kit
     vehicle_id: default
+    pre_task: "ros2 launch..." # ml model変換など
 
 /dlr2/talker_evaluator:
   ros__parameters:
+    post_task: "python3 post_script.py ${result.jsonl}" # simulationで作ったjsonlを後処理するなど
     prefix_msg: "talker_pre_yaml"
     postfix_msg: "talker_post_yaml"
 
 /dlr2/listener_evaluator:
   ros__parameters:
+    post_task: "python3 post_script.py ${result.jsonl}" # simulationで作ったjsonlを後処理するなど
     prefix_msg: "I'm listener"
     postfix_msg: "finish"
 

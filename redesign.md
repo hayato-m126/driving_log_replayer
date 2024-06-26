@@ -89,7 +89,12 @@ perceptionとannotationless_perceptionは少なくとも同時に評価出来て
 
 評価ノードはsubscribeして、topicの内容解析して結果をファイルに書き出しているだけ。
 現状result.jsonl固定で出力しているが、ユースケース毎に別の名前でファイルで出力するように直せばよい。
-result_bagはそれぞれの評価で必要なtopicをマージしてrecoderに渡せばいい。
+result_bagはそれぞれの評価で必要なtopicをマージしてrecorderに渡せばいい。
+
+### シナリオフォーマットがわかりにくい
+
+開発開始時にScenario Simulatorのフォーマットを真似してCamelCaseで記載することとしたが、perception_evalに渡す設定をシナリオフォーマットの中に入れるようになり、snake_caseが混ざるようになった。
+Pydanticをシナリオの構造チェックに使っていて、Modelを定義する都合上、snake_caseで書いて統一したほうがわかりやすそう。シナリオ変換ツール作る。
 
 ## サンプル実装で実現可能を確認した
 
@@ -106,8 +111,8 @@ result_bagはそれぞれの評価で必要なtopicをマージしてrecoderに�
 - clock止まったあとに、最終メトリクス出したりしているから自分のノードで終了判定できるのも悪くないけど、後処理をOnExitで別途起動できるようにしておけばいいような。
 - 後処理が自由にかけるなら、ndt_convergenceの評価は単にbag作ってるだけだから、後処理だけ書いてもらればいい。
 - AWSIMを使ってシミュレーションを実行しながら評価する方法もサポートしたい
-- scenario format yaml を pydanticでスキーマーガチガチに固める。やればできる
-- result format jsonl を pydanticでスキーマーガチガチに固める。やればできる
+- scenario format yaml を pydanticでスキーマをガチガチに固める。やればできる
+- result format jsonl を pydanticでスキーマをガチガチに固める。やればできる
 
 ### GUI
 

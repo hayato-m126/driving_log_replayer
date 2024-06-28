@@ -37,7 +37,7 @@ import yaml
 from dlr2.shutdown_once import ShutdownOnce
 
 
-def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
+def launch_bag_player(context: LaunchContext) -> list:
     bag_player = ExecuteProcess(
         cmd=[
             "ros2",
@@ -68,7 +68,7 @@ def launch_bag_player(context: LaunchContext) -> IncludeLaunchDescription:
     ]
 
 
-def launch_bag_recorder(context: LaunchContext) -> IncludeLaunchDescription:
+def launch_bag_recorder(context: LaunchContext) -> list:
     output_path = Path(context.launch_configurations["output_path"], "result_bag")
 
     return [
@@ -96,7 +96,7 @@ def launch_bag_recorder(context: LaunchContext) -> IncludeLaunchDescription:
     ]
 
 
-def launch_autoware(context: LaunchContext) -> IncludeLaunchDescription:
+def launch_autoware(context: LaunchContext) -> list:
     autoware_launch_file = Path(
         get_package_share_directory("autoware_launch"),
         "launch",
